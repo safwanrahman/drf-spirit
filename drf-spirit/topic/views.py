@@ -5,6 +5,6 @@ from spirit.topic.models import Topic
 from .serializers import TopicSerializer
 
 
-class TopicList(generics.ListAPIView):
+class TopicList(generics.ListCreateAPIView):
     serializer_class = TopicSerializer
     queryset = Topic.objects.all()
