@@ -1,7 +1,6 @@
 from rest_framework import generics
 
-from spirit.topic.models import Topic
-
+from .models import Topic
 from .serializers import TopicSerializer
 
 
