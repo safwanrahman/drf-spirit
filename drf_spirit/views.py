@@ -7,3 +7,8 @@ from .serializers import TopicSerializer
 class TopicList(generics.ListCreateAPIView):
     serializer_class = TopicSerializer
     queryset = Topic.objects.all()
+
+
+class TopicDetails(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = TopicSerializer
+    queryset = Topic.objects.all()
