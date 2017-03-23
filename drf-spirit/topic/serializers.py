@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 
 
-from spirit.models import Topic
+from spirit.topic.models import Topic
 
 
 class TopicSerializer(ModelSerializer):
