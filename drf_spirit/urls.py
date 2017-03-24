@@ -11,7 +11,7 @@ topic_urls = [
 
 category_urls = [
     url(r'^$', CategoryList.as_view(), name='category-list'),
-    url(r'^(?P<pk>\d+)/$', CategoryDetails.as_view(), name='category-detail')
+    url(r'^(?P<slug>[-\w]+)/$', CategoryDetails.as_view(), name='category-detail')
 ]
 
 
