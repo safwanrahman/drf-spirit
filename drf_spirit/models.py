@@ -10,6 +10,8 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.utils import timezone
 
+from .config import COMMENT_ACTION, COMMENT
+
 
 class Category(models.Model):
     """
@@ -18,7 +20,7 @@ class Category(models.Model):
     parent = models.ForeignKey('self', verbose_name=_("category parent"), null=True)
 
     title = models.CharField(_("title"), max_length=75)
-    slug = AutoSlugField(populate_from="title", db_index=False, blank=True)
+    slug = AutoSlugField(populate_from="title", db_index=False, blank=True, unique=True)
     description = models.CharField(_("description"), max_length=255, blank=True)
     color = models.CharField(_("color"), max_length=7, blank=True,
                              help_text=_("Title color in hex format (i.e: #1aafd0)."))
@@ -56,9 +58,9 @@ class Topic(models.Model):
     category = models.ForeignKey(Category, verbose_name=_("category"))
 
     title = models.CharField(_("title"), max_length=255)
-    slug = AutoSlugField(populate_from="title", db_index=True, blank=True)
-    date = models.DateTimeField(_("date"), default=timezone.now)
-    last_active = models.DateTimeField(_("last active"), default=timezone.now)
+    slug = AutoSlugField(populate_from="title", db_index=True, blank=True, unique=True)
+    date = models.DateTimeField(_("date"), default=timezone.now, blank=True, editable=False)
+    last_active = models.DateTimeField(_("last active"), default=timezone.now, blank=True)
 
     is_pinned = models.BooleanField(_("pinned"), default=False)
     is_globally_pinned = models.BooleanField(_("globally pinned"), default=False)
@@ -81,22 +83,43 @@ class Topic(models.Model):
     def main_category(self):
         return self.category.parent or self.category
 
-    @property
-    def is_visited(self):
-        return bool(self.bookmark)
-
     def increase_view_count(self):
-        Topic.objects\
-            .filter(pk=self.pk)\
-            .update(view_count=F('view_count') + 1)
+        Topic.objects.filter(pk=self.pk).update(view_count=F('view_count') + 1)
 
     def increase_comment_count(self):
-        Topic.objects\
-            .filter(pk=self.pk)\
-            .update(comment_count=F('comment_count') + 1, last_active=timezone.now())
+        Topic.objects.filter(pk=self.pk).update(comment_count=F('comment_count') + 1, last_active=timezone.now())
 
     def decrease_comment_count(self):
         # todo: update last_active to last() comment
-        Topic.objects\
-            .filter(pk=self.pk)\
-            .update(comment_count=F('comment_count') - 1)
+        Topic.objects.filter(pk=self.pk).update(comment_count=F('comment_count') - 1)
+
+
+class Comment(models.Model):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='forum_comments')
+    topic = models.ForeignKey(Topic, related_name='comments')
+
+    comment = models.TextField(_("comment"))
+    action = models.IntegerField(_("action"), choices=COMMENT_ACTION, default=COMMENT)
+    date = models.DateTimeField(default=timezone.now, blank=True, editable=False)
+    is_removed = models.BooleanField(default=False)
+    is_modified = models.BooleanField(default=False)
+    ip_address = models.GenericIPAddressField(blank=True, null=True)
+
+    modified_count = models.PositiveIntegerField(_("modified count"), default=0)
+    likes_count = models.PositiveIntegerField(_("likes count"), default=0)
+
+    class Meta:
+        ordering = ['-date', '-pk']
+        verbose_name = _("comment")
+        verbose_name_plural = _("comments")
+
+    def increase_modified_count(self):
+        Comment.objects.filter(pk=self.pk).update(modified_count=F('modified_count') + 1)
+
+    def increase_likes_count(self):
+        Comment.objects.filter(pk=self.pk).update(likes_count=F('likes_count') + 1)
+
+    def decrease_likes_count(self):
+        (Comment.objects.filter(pk=self.pk, likes_count__gt=0)
+                        .update(likes_count=F('likes_count') - 1))

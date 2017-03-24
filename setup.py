@@ -34,6 +34,8 @@ setup(
     ],
     install_requires=[
         'django>=1.8',
-        'djangorestframework>=3.5'
+        'djangorestframework>=3.5',
+        'django-autoslug>=1.9.3',
+        'django-filter>=1.0.1',
     ]
 )
