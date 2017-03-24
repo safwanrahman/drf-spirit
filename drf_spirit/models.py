@@ -17,7 +17,7 @@ class Category(models.Model):
     """
     Category model
     """
-    parent = models.ForeignKey('self', verbose_name=_("category parent"), null=True)
+    parent = models.ForeignKey('self', verbose_name=_("category parent"), blank=True, null=True)
 
     title = models.CharField(_("title"), max_length=75)
     slug = AutoSlugField(populate_from="title", db_index=False, blank=True, unique=True)
