@@ -13,6 +13,9 @@ class TopicList(generics.ListCreateAPIView):
     queryset = Topic.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class TopicDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TopicSerializer

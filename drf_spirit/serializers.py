@@ -5,6 +5,8 @@ from .models import Topic, Category, Comment
 
 class TopicSerializer(ModelSerializer):
 
+    user = PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Topic
         fields = '__all__'

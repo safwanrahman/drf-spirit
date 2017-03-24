@@ -37,6 +37,9 @@ class Category(models.Model):
         verbose_name = _("category")
         verbose_name_plural = _("categories")
 
+    def __unicode__(self):
+        return self.title.encode('utf-8')
+
     def get_absolute_url(self):
         return reverse(
                 'drf_spirit:category-detail',
@@ -70,11 +73,13 @@ class Topic(models.Model):
     view_count = models.PositiveIntegerField(_("views count"), default=0)
     comment_count = models.PositiveIntegerField(_("comment count"), default=0)
 
-
     class Meta:
         ordering = ['-last_active', '-pk']
         verbose_name = _("topic")
         verbose_name_plural = _("topics")
+
+    def __unicode__(self):
+        return self.title.encode('utf-8')
 
     def get_absolute_url(self):
         return reverse('drf_spirit:topic-detail', kwargs={'pk': str(self.id), 'slug': self.slug})
@@ -113,6 +118,9 @@ class Comment(models.Model):
         ordering = ['-date', '-pk']
         verbose_name = _("comment")
         verbose_name_plural = _("comments")
+
+    def __unicode__(self):
+        return self.comment[:10].encode('utf-8')
 
     def increase_modified_count(self):
         Comment.objects.filter(pk=self.pk).update(modified_count=F('modified_count') + 1)
