@@ -16,4 +16,3 @@ class CategorySerializer(ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
-        lookup_field = 'slug'
