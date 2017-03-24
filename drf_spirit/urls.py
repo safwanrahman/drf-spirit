@@ -16,5 +16,6 @@ category_urls = [
 
 
 urlpatterns = [
-    url(r'^topics/$', include(topic_urls)),
-    url(r'^category/$', include(category_urls)),
+    url(r'^topics/', include(topic_urls)),
+    url(r'^category/', include(category_urls)),
+]
