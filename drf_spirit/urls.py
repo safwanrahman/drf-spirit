@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 
-from .views import TopicList, TopicDetails, CategoryList, CategoryDetails, CommentList
+from .views import TopicList, TopicDetails, CategoryList, CommentList
 
 app_name = 'drf-spirit'
 
