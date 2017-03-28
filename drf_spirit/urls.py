@@ -15,12 +15,11 @@ comment_urls = [
 
 category_urls = [
     url(r'^$', CategoryList.as_view(), name='category-list'),
-    url(r'^(?P<slug>[-\w]+)/$', CategoryDetails.as_view(), name='category-detail')
 ]
 
 
 urlpatterns = [
     url(r'^topics/', include(topic_urls)),
-    url(r'^category/', include(category_urls)),
+    url(r'^categories/', include(category_urls)),
     url(r'^comments/', include(comment_urls),)
 ]

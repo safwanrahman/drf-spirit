@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 from .filters import CommentFilter
 from .models import Topic, Category, Comment
@@ -23,17 +23,10 @@ class TopicDetails(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
 
 
-class CategoryList(generics.ListCreateAPIView):
+class CategoryList(generics.ListAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-
-
-class CategoryDetails(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = CategorySerializer
-    queryset = Category.objects.all()  
-    lookup_field = 'slug'
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsAuthenticated,)
 
 
 class CommentList(generics.ListCreateAPIView):

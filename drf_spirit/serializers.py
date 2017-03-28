@@ -16,6 +16,7 @@ class CategorySerializer(ModelSerializer):
 
     class Meta:
         model = Category
+        fields = '__all__'
 
 
 class CommentSerializer(ModelSerializer):
