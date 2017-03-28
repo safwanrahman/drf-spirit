@@ -22,6 +22,13 @@ class TopicDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Topic.objects.all()
     permission_classes = (IsOwnerOrReadOnly,)
     lookup_field = 'slug'
+    
+
+class TopicDetailsComments(generics.ListAPIView):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.filter()
+    permission_classes = (IsOwnerOrReadOnly,)
+    lookup_url_kwarg = 'slug'
 
 
 class CategoryList(generics.ListAPIView):
