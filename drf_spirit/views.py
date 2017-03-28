@@ -21,6 +21,7 @@ class TopicDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TopicSerializer
     queryset = Topic.objects.all()
     permission_classes = (IsOwnerOrReadOnly,)
+    lookup_field = 'slug'
 
 
 class CategoryList(generics.ListAPIView):
