@@ -1,3 +1,3 @@
 include LICENSE
 include README.md
-recursive-include webpush/templates *
+recursive-include drf_spirit/templates *
