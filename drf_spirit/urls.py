@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 
 from .views import TopicList, TopicDetails, TopicDetailsComments, CategoryList, CommentList
 
-app_name = 'drf-spirit'
+app_name = 'drf_spirit'
 
 topic_urls = [
     url(r'^$', TopicList.as_view(), name='topic-list'),

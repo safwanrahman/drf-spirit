@@ -37,5 +37,6 @@ setup(
         'djangorestframework>=3.5',
         'django-autoslug>=1.9.3',
         'django-filter>=1.0.1',
-    ]
+    ],
+    test_suite='runtests.runtests',
 )
