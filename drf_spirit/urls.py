@@ -1,17 +1,17 @@
 from django.conf.urls import include, url
 
-from .views import TopicList, TopicDetails, TopicDetailsComments, CategoryList, CommentList
+from .views import TopicList, TopicDetails, TopicCommentList, CategoryList, CommentList
 
 app_name = 'drf_spirit'
 
 topic_urls = [
     url(r'^$', TopicList.as_view(), name='topic-list'),
     url(r'^(?P<slug>[\w-]+)/$', TopicDetails.as_view(), name='topic-detail'),
-    url(r'^(?P<slug>[\w-]+)/comments/$', TopicDetailsComments.as_view(), name='topic-detail')
+    url(r'^(?P<slug>[\w-]+)/comments/$', TopicCommentList.as_view(), name='topic-comment-list')
 ]
 
 comment_urls = [
-    url(r'^$', CommentList.as_view(), name='topic-comments'),
+    url(r'^$', CommentList.as_view(), name='comments'),
 ]
 
 category_urls = [
