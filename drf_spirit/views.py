@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, AllowAny
 
 from .filters import CommentFilter
 from .models import Topic, Category, Comment
@@ -37,7 +37,7 @@ class TopicCommentList(generics.ListAPIView):
 class CategoryList(generics.ListAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
 
 class CommentList(generics.ListCreateAPIView):
