@@ -20,7 +20,7 @@ class Category(models.Model):
     parent = models.ForeignKey('self', verbose_name=_("category parent"), blank=True, null=True)
 
     title = models.CharField(_("title"), max_length=75)
-    slug = AutoSlugField(populate_from="title", db_index=False, blank=True, unique=True)
+    slug = AutoSlugField(populate_from="title", blank=True, unique=True)
     description = models.CharField(_("description"), max_length=255, blank=True)
     color = models.CharField(_("color"), max_length=7, blank=True,
                              help_text=_("Title color in hex format (i.e: #1aafd0)."))
@@ -61,7 +61,7 @@ class Topic(models.Model):
     category = models.ForeignKey(Category, verbose_name=_("category"))
 
     title = models.CharField(_("title"), max_length=255)
-    slug = AutoSlugField(populate_from="title", db_index=True, blank=True, unique=True)
+    slug = AutoSlugField(populate_from="title", blank=True, unique=True)
     date = models.DateTimeField(_("date"), default=timezone.now, blank=True, editable=False)
     last_active = models.DateTimeField(_("last active"), default=timezone.now, blank=True)
 

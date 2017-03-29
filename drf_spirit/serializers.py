@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 
 from .models import Topic, Category, Comment
+from .relations import PresentableSlugRelatedField
 
 
 class CategorySerializer(ModelSerializer):
@@ -10,10 +11,19 @@ class CategorySerializer(ModelSerializer):
         fields = '__all__'
 
 
+class CategoryLiteSerializer(ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ('title', 'slug', 'color')
+
+
 class TopicSerializer(ModelSerializer):
 
     user = PrimaryKeyRelatedField(read_only=True)
-    category = CategorySerializer(read_only=True)
+    category = PresentableSlugRelatedField(queryset=Category.objects.all(),
+                                           presentation_serializer=CategoryLiteSerializer,
+                                           slug_field='slug')
 
     class Meta:
         model = Topic
