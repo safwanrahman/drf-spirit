@@ -19,3 +19,11 @@ Add `'drf_spirit'` to your `INSTALLED_APPS` setting.
         ...
         'drf_spirit',
     )
+
+
+# Settings
+Adding ``USER_SLUG_FIELD`` configuration in the settings will allow you to use user slug instead of pk for user relationship. You can do like following:
+
+    DRF_SPIRIT = {
+        'USER_SLUG_FIELD': 'slug'
+    }

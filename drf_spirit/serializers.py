@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, SerializerMethodField
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from .fields import UserReadOnlyFiled
 from .models import Topic, Category, Comment
