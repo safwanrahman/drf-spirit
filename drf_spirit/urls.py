@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 
-from .views import TopicList, TopicDetails, TopicCommentList, CategoryList, CommentList
+from .views import TopicList, TopicDetails, TopicCommentList, CategoryList, CommentList, CommentDetails
 
 app_name = 'drf_spirit'
 
@@ -12,6 +12,7 @@ topic_urls = [
 
 comment_urls = [
     url(r'^$', CommentList.as_view(), name='comments'),
+    url(r'^(?P<id>\d+)/$', CommentDetails.as_view(), name='comment-details'),
 ]
 
 category_urls = [
