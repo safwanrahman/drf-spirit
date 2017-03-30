@@ -9,7 +9,7 @@ class UserReadOnlyFiled(ReadOnlyField):
         # If *SLUG_FIELD is provided in settings, we should return user slug
         # Otherwise return user pk
         USER_SLUG_FIELD = None
-        drf_spirit_setting = getattr(settings, 'DRF_SPIRIT')
+        drf_spirit_setting = getattr(settings, 'DRF_SPIRIT', None)
         if drf_spirit_setting:
             USER_SLUG_FIELD = drf_spirit_setting.get('USER_SLUG_FIELD')
 

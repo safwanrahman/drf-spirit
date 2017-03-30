@@ -33,7 +33,7 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
     install_requires=[
-        'django>=1.8',
+        'django>=1.8,<1.11',
         'djangorestframework>=3.5',
         'django-autoslug>=1.9.3',
         'django-filter>=1.0.1',
