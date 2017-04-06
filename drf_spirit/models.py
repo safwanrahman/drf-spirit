@@ -57,21 +57,21 @@ class Topic(models.Model):
     """
     Topic model
     """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='spirit_topics')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='spirit_topics', editable=False)
     category = models.ForeignKey(Category, verbose_name=_("category"))
 
     title = models.CharField(_("title"), max_length=255)
     slug = AutoSlugField(populate_from="title", blank=True, unique=True)
     date = models.DateTimeField(_("date"), default=timezone.now, blank=True, editable=False)
-    last_active = models.DateTimeField(_("last active"), default=timezone.now, blank=True)
+    last_active = models.DateTimeField(_("last active"), default=timezone.now, blank=True, editable=False)
 
-    is_pinned = models.BooleanField(_("pinned"), default=False)
-    is_globally_pinned = models.BooleanField(_("globally pinned"), default=False)
+    is_pinned = models.BooleanField(_("pinned"), default=False, editable=False)
+    is_globally_pinned = models.BooleanField(_("globally pinned"), default=False, editable=False)
     is_closed = models.BooleanField(_("closed"), default=False)
     is_removed = models.BooleanField(default=False)
 
-    view_count = models.PositiveIntegerField(_("views count"), default=0)
-    comment_count = models.PositiveIntegerField(_("comment count"), default=0)
+    view_count = models.PositiveIntegerField(_("views count"), default=0, editable=False)
+    comment_count = models.PositiveIntegerField(_("comment count"), default=0, editable=False)
 
     class Meta:
         ordering = ['-last_active', '-pk']
@@ -101,18 +101,18 @@ class Topic(models.Model):
 
 class Comment(models.Model):
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='forum_comments')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='forum_comments', editable=False)
     topic = models.ForeignKey(Topic, related_name='comments')
 
     comment = models.TextField(_("comment"))
     action = models.IntegerField(_("action"), choices=COMMENT_ACTION, default=COMMENT)
     date = models.DateTimeField(default=timezone.now, blank=True, editable=False)
     is_removed = models.BooleanField(default=False)
-    is_modified = models.BooleanField(default=False)
-    ip_address = models.GenericIPAddressField(blank=True, null=True)
+    is_modified = models.BooleanField(default=False, editable=False)
+    ip_address = models.GenericIPAddressField(blank=True, null=True, editable=False)
 
-    modified_count = models.PositiveIntegerField(_("modified count"), default=0)
-    likes_count = models.PositiveIntegerField(_("likes count"), default=0)
+    modified_count = models.PositiveIntegerField(_("modified count"), default=0, editable=False)
+    likes_count = models.PositiveIntegerField(_("likes count"), default=0, editable=False)
 
     class Meta:
         ordering = ['-date', '-pk']
