@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
-from .fields import UserReadOnlyFiled
+from .fields import UserReadOnlyField
 from .models import Topic, Category, Comment
 from .relations import PresentableSlugRelatedField
 
@@ -21,7 +21,7 @@ class CategoryLiteSerializer(ModelSerializer):
 
 class TopicSerializer(ModelSerializer):
 
-    user = UserReadOnlyFiled()
+    user = UserReadOnlyField()
     category = PresentableSlugRelatedField(queryset=Category.objects.all(),
                                            presentation_serializer=CategoryLiteSerializer,
                                            slug_field='slug')
@@ -33,7 +33,7 @@ class TopicSerializer(ModelSerializer):
 
 class CommentSerializer(ModelSerializer):
 
-    user = UserReadOnlyFiled()
+    user = UserReadOnlyField()
 
     class Meta:
         model = Comment

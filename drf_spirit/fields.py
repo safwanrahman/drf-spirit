@@ -2,7 +2,7 @@ from rest_framework.serializers import ReadOnlyField
 from django.conf import settings
 
 
-class UserReadOnlyFiled(ReadOnlyField):
+class UserReadOnlyField(ReadOnlyField):
     """Return user pk or slug depends on settings"""
 
     def to_representation(self, value):
