@@ -131,3 +131,16 @@ class Comment(models.Model):
     def decrease_likes_count(self):
         (Comment.objects.filter(pk=self.pk, likes_count__gt=0)
                         .update(likes_count=F('likes_count') - 1))
+
+    def save(self, *args, **kwargs):
+        # Comment has pk, means the comment is modified. So increase modified_count and change is_modified
+        if self.pk:
+            self.is_modified = True
+            self.modified_count = F('modified_count') + 1
+
+        super(Comment, self).save(*args, **kwargs)
+
+        if self.pk:
+            # comment has pk means modified_count is changed.
+            # As we use F expression, its not possible to know modified_count until refresh from db
+            self.refresh_from_db()

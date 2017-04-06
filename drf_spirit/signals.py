@@ -7,11 +7,10 @@ from .models import Comment
 
 @receiver(post_save, sender=Comment)
 def post_comment_save(sender, instance, created, **kwargs):
-    # Need to send emails to topic people
-    send_email_to_topic_people(instance, created)
-
-    # need to update *comment_count of topic if the comment is created
     if created:
+        # Need to send emails to topic people
+        send_email_to_topic_people(instance, created)
+        # need to update *comment_count of topic if the comment is created
         instance.topic.increase_comment_count()
 
 
